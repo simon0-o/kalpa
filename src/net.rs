@@ -53,7 +53,7 @@ impl<T: Source> Drop for Async<T> {
 
 impl Async<TcpListener> {
     pub fn connect(address: SocketAddr) -> io::Result<Self> {
-        let socket_type = Type::STREAM.nonblocking();
+        let socket_type = Type::from(libc::SOCK_STREAM | libc::O_NONBLOCK);
         let socket = Socket::new(
             Domain::for_address(address),
             socket_type,
